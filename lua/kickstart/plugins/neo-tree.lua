@@ -1,5 +1,7 @@
 -- Neo-tree is a Neovim plugin to browse the file system
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
+-- Neo-tree is a Neovim plugin to browse the file system
+-- https://github.com/nvim-neo-tree/neo-tree.nvim
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
@@ -20,6 +22,22 @@ return {
           ['\\'] = 'close_window',
         },
       },
+    },
+  },
+  event_handlers = {
+    {
+      event = 'neo_tree_buffer_enter',
+      handler = function()
+        vim.opt_local.relativenumber = true -- Enable relative line numbers
+        vim.opt_local.number = true -- Enable absolute line numbers
+      end,
+    },
+    {
+      event = 'neo_tree_buffer_leave',
+      handler = function()
+        vim.opt_local.relativenumber = false -- Disable relative line numbers
+        vim.opt_local.number = false -- Optionally disable absolute line numbers
+      end,
     },
   },
 }
