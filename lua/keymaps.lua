@@ -48,3 +48,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Quit Vim shortcut
+vim.keymap.set('n', '<leader>qa', ':qa<CR>', { noremap = true, silent = true })
+
+-- Save All vim shortcut
+vim.keymap.set('n', '<leader>wa', ':wa<CR>', { noremap = true, silent = true })
