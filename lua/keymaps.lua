@@ -16,8 +16,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-vim.keymap.set('n', '<leader>e', ':Ex<CR>', { noremap = true, silent = true })
-
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -50,7 +48,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim: ts=2 sts=2 sw=2 et
 
 -- Quit Vim shortcut
-vim.keymap.set('n', '<leader>qa', ':qa<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>Q', ':qa<CR>', { noremap = true, silent = true })
 
 -- Save All vim shortcut
 vim.keymap.set('n', '<leader>wa', ':wa<CR>', { noremap = true, silent = true })
+
+-- lua/config/keymaps.lua
+vim.keymap.set('n', '<leader>cg', ':CMakeGenerate<CR>', { desc = 'CMake Generate' })
+vim.keymap.set('n', '<leader>cb', ':CMakeBuild<CR>', { desc = 'CMake Build' })
+vim.keymap.set('n', '<leader>cr', ':CMakeRun<CR>', { desc = 'CMake Run' })
+vim.keymap.set('n', '<leader>cc', ':CMakeClean<CR>', { desc = 'CMake Clean' })
+vim.keymap.set('n', '<leader>cd', ':CMakeDebug<CR>', { desc = 'CMake Debug' })
+
+--Semi colon at the end of a line
+vim.keymap.set('n', '<leader>;', 'A;<Esc>', { noremap = true, silent = true })
+
+--Open neo-tree
+vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { noremap = true, silent = true })
+
+--Close current tab
+vim.keymap.set('n', '<C-q>', ':q<CR>', { noremap = true, silent = true })
