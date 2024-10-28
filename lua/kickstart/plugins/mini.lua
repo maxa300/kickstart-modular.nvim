@@ -1,40 +1,37 @@
 return {
-  { -- Collection of various small independent plugins/modules
+  {
     'echasnovski/mini.nvim',
     config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
+      -- Setup modules
       require('mini.ai').setup { n_lines = 500 }
-
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
+      -- Function to toggle formatting based on comment markers
+      local function is_formatting_disabled(line)
+        return line:match '// format: off' or line:match '// format: on'
       end
 
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
+      -- Wrap around the formatter to check for markers
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        callback = function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+          local format_on = true
+          for i, line in ipairs(lines) do
+            if is_formatting_disabled(line) then
+              format_on = not format_on
+            end
+
+            if format_on then
+              -- Run mini.nvim formatting
+              -- Add your formatting code here that respects the `format_on` flag
+            end
+          end
+        end,
+      })
+
+      -- Other mini.nvim setups...
     end,
   },
 }
--- vim: ts=2 sts=2 sw=2 et
